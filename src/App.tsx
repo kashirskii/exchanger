@@ -1,4 +1,4 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import {
@@ -8,6 +8,7 @@ import {
   setBaseCurrency,
   setCurrency,
 } from './store/exchangerSlice';
+import { ConvertInput } from './components/ConvertInput';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -18,56 +19,20 @@ function App() {
     <>
       <div className='mx-auto mt-52 w-[1000px] flex gap-5'>
         <h2 className='my-5'>FROM</h2>
-        <div className='flex gap-5'>
-          <TextField
-            onChange={event => dispatch(setAmountBaseCurrency(event.target.value))}
-            id='outlined-basic'
-            label='Amount'
-            variant='outlined'
-            value={data.amountBaseCurrency}
-          />
-          <FormControl sx={{ minWidth: 150 }}>
-            <InputLabel id='base-currency-label'>Currency</InputLabel>
-            <Select
-              onChange={event => dispatch(setBaseCurrency(event.target.value))}
-              labelId='base-currency-label'
-              id='base-currency'
-              label='Currency'
-              value={data.baseCurrency}
-            >
-              <MenuItem value={`USD`}>USD</MenuItem>
-              <MenuItem value={`EUR`}>EUR</MenuItem>
-              <MenuItem value={`RUB`}>RUB</MenuItem>
-              <MenuItem value={``}>None</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-
+        <ConvertInput
+          inputValue={data.amountBaseCurrency}
+          selectValue={data.baseCurrency}
+          inputValueHandler={(event) => dispatch(setAmountBaseCurrency(Number(event.target.value)))}
+          selectValueHandler={(event) => dispatch(setBaseCurrency(event.target.value))}
+        />
         <h2 className='my-5'>TO</h2>
-        <div className='flex gap-5'>
-          <TextField
-            onChange={event => dispatch(setAmountCurrency(event.target.value))}
-            id='outlined-basic'
-            label='Amount'
-            variant='outlined'
-            value={data.amountCurrency}
-          />
-          <FormControl sx={{ minWidth: 150 }}>
-            <InputLabel id='currency-label'>Currency</InputLabel>
-            <Select
-              onChange={event => dispatch(setCurrency(event.target.value))}
-              labelId='currency-label'
-              id='currency'
-              label='Currency'
-              value={data.currency}
-            >
-              <MenuItem value={`USD`}>USD</MenuItem>
-              <MenuItem value={`EUR`}>EUR</MenuItem>
-              <MenuItem value={`RUB`}>RUB</MenuItem>
-              <MenuItem value={``}>None</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+        <ConvertInput
+          inputValue={data.amountCurrency}
+          selectValue={data.currency}
+          inputValueHandler={(event) => dispatch(setAmountCurrency(Number(event.target.value)))}
+          selectValueHandler={(event) => dispatch(setCurrency(event.target.value))}
+        />
+
         <Button
           variant='outlined'
           onClick={() => dispatch(fetchExchangeRate({ currency, baseCurrency }))}

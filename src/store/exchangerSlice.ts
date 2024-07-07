@@ -34,19 +34,15 @@ export const exchangerSlice = createSlice({
   reducers: {
     setBaseCurrency: (state, action: PayloadAction<string>) => {
         state.baseCurrency = action.payload
-        fetchExchangeRate({currency: state.currency, baseCurrency: state.baseCurrency})
     },
     setCurrency: (state, action: PayloadAction<string>) => {
         state.currency = action.payload
-        fetchExchangeRate({currency: state.currency, baseCurrency: state.baseCurrency})
     },
-    setAmountBaseCurrency: (state, action: PayloadAction<string>) => {
-        state.amountBaseCurrency = Number(action.payload)
-        fetchExchangeRate({currency: state.currency, baseCurrency: state.baseCurrency})
+    setAmountBaseCurrency: (state, action: PayloadAction<number>) => {
+        state.amountBaseCurrency = action.payload
     },
-    setAmountCurrency: (state, action: PayloadAction<string>) => {
-        state.amountCurrency = Number(action.payload)
-        fetchExchangeRate({currency: state.currency, baseCurrency: state.baseCurrency})
+    setAmountCurrency: (state, action: PayloadAction<number>) => {
+        state.amountCurrency = action.payload
     }
   },
   extraReducers: (builder) => {
